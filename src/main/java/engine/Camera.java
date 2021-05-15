@@ -18,9 +18,11 @@ public class Camera {
 
     public void adjustProjection(){
         projectionMatrix.identity();
+        int widthWindow = Window.get().width;
+        int heightWindow = Window.get().height;
         //32*32 pixel by 9 * 2 grid RIGHT
         //32*32 pixel by 6 * 2 grid UP
-        projectionMatrix.ortho(0.0f, 32.0f* 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
+        projectionMatrix.ortho(0.0f, (float)widthWindow, 0.0f, (float)heightWindow, 0.0f, 100.0f);
     }
 
     public Matrix4f getViewMatrix() {

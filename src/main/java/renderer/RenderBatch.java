@@ -2,7 +2,10 @@ package renderer;
 
 import components.SpriteRenderer;
 import engine.Window;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+import until.AssetPool;
+import until.Time;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
@@ -34,8 +37,7 @@ public class RenderBatch {
     private Shader shader;
 
     public RenderBatch(int maxBatchSize) {
-        shader = new Shader("assets/shaders/default.glsl");
-        shader.compile();
+        shader = AssetPool.getShader("assets/shaders/default.glsl");
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
@@ -93,6 +95,8 @@ public class RenderBatch {
         shader.use();
         shader.uploadMat4f("uProjection", Window.getScene().camera().getProjectionMatrix());
         shader.uploadMat4f("uView", Window.getScene().camera().getViewMatrix());
+        shader.uploadFloat("uTime", Time.getTime());
+        shader.uploadVec2f("resolution", new Vector2f((float)Window.getWidth(), (float)Window.getHeight()));
 
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);

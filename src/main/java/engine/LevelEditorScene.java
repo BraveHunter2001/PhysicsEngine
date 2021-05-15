@@ -4,6 +4,9 @@ package engine;
 import components.SpriteRenderer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import renderer.Shader;
+import until.AssetPool;
+import until.Time;
 
 public class LevelEditorScene extends  Scene{
 
@@ -17,8 +20,19 @@ public class LevelEditorScene extends  Scene{
     @Override
     public void init()
     {
-        this.camera = new Camera( new Vector2f(-250, 0));
+        this.camera = new Camera( new Vector2f(0, 0));
 
+
+/*
+        Vector2f posVect = new Vector2f(10,10);
+        Vector2f sizeVect = new Vector2f(500, 500);
+        Transform transform = new Transform(posVect, sizeVect);
+
+        GameObject go = new GameObject("Plane",transform);
+        go.addComponent(new SpriteRenderer(new Vector4f(1,1,1,1)));
+        this.addGameObjectToScene(go);
+
+    */
         int xOffset = 10;
         int yOffset = 10;
 
@@ -39,16 +53,25 @@ public class LevelEditorScene extends  Scene{
             }
         }
 
+
+        loadResources();
+    }
+
+    private void loadResources(){
+        AssetPool.getShader("assets/shaders/default.glsl");
     }
 
     @Override
     public void update(float dt) {
-        System.out.println(1 / dt); //fps
+        Window.setNameWindow((int)(1/dt));
+
+
         for(GameObject go: gameObjects)
         {
             go.update(dt);
         }
 
         this.renderer.render();
+
     }
 }

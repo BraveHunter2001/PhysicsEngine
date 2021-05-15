@@ -25,8 +25,8 @@ public class Window {
 
 
     private Window() {
-        this.width = 1920;
-        this.height = 1080;
+        this.width = 900;
+        this.height = 600;
         this.title = "PhysicsEngine";
         r = 1;
         b = 1;
@@ -59,9 +59,21 @@ public class Window {
         }
         return Window.window;
     }
+    public static int getWidth(){
+        return Window.get().width;
+    }
+
+    public static int getHeight(){
+        return Window.get().height;
+    }
 
     public static Scene getScene(){
         return get().currentScene;
+    }
+
+    public static void setNameWindow(int fps)
+    {
+        glfwSetWindowTitle(get().glfwWindow, "PhysicsEngine| FPS: " + Integer.toString(fps));
     }
 
     public void run() {
@@ -79,6 +91,8 @@ public class Window {
         glfwSetErrorCallback(null).free();
     }
 
+
+
     public void init() {
         //Setup an error callBack
         GLFWErrorCallback.createPrint(System.err).set();
@@ -92,7 +106,7 @@ public class Window {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); // start max
+        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); // start max
 
         //create window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
@@ -116,6 +130,8 @@ public class Window {
         GL.createCapabilities();
         Window.changeScene(0);
     }
+
+
 
     public void loop() {
         float beginTime = Time.getTime();
