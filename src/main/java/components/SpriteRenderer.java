@@ -1,19 +1,26 @@
 package components;
 
 import engine.Component;
+import org.joml.Vector4f;
 
 public class SpriteRenderer extends Component {
-    boolean fisttime =false;
+
+    Vector4f color;
+
+    public SpriteRenderer(Vector4f color) {
+        this.color = color;
+    }
     @Override
     public void update(float dt) {
-        if (!fisttime) {
-            System.out.println("I am updating");
-            fisttime = true;
-        }
+
     }
 
     @Override
     public void start() {
-        System.out.println("I am starting");
+
+    }
+
+    public Vector4f getColor() {
+        return  this.color;
     }
 }

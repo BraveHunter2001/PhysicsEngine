@@ -25,8 +25,8 @@ public class Window {
 
 
     private Window() {
-        this.width = 900;
-        this.height = 600;
+        this.width = 1920;
+        this.height = 1080;
         this.title = "PhysicsEngine";
         r = 1;
         b = 1;
@@ -58,6 +58,10 @@ public class Window {
             Window.window = new Window();
         }
         return Window.window;
+    }
+
+    public static Scene getScene(){
+        return get().currentScene;
     }
 
     public void run() {
