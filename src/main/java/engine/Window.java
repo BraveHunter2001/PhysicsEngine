@@ -40,10 +40,12 @@ public class Window {
             case 0:
                currentScene = new LevelEditorScene();
                currentScene.init();
+               currentScene.start();
                break;
             case 1:
                 currentScene = new LevelScene();
                 currentScene.init();
+                currentScene.start();
                 break;
             default:
                 assert false: "Unknown scene ' "+ newScene + "'";
@@ -86,7 +88,7 @@ public class Window {
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        //glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); // start max
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE); // start max
 
         //create window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
