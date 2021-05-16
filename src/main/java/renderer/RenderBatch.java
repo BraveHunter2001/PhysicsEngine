@@ -9,6 +9,7 @@ import util.AssetPool;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
@@ -116,6 +117,10 @@ public class RenderBatch {
         shader.use();
         shader.uploadMat4f("uProjection", Window.getScene().camera().getProjectionMatrix());
         shader.uploadMat4f("uView", Window.getScene().camera().getViewMatrix());
+        shader.uploadFloat("uTime", (float)glfwGetTime());
+        shader.uploadVec2f("uResolution", new Vector2f(Window.getWidth(), Window.getHeight()));
+
+
         for (int i=0; i < textures.size(); i++) {
             glActiveTexture(GL_TEXTURE0 + i + 1);
             textures.get(i).bind();
@@ -156,6 +161,7 @@ public class RenderBatch {
                 }
             }
         }
+        System.out.println(texId);
 
         // Add vertices with the appropriate properties
         float xAdd = 1.0f;

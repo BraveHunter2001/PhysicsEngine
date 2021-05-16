@@ -30,19 +30,29 @@ void main() {
     in vec4 fColor;
     in vec2 fTexCoords;
     in float fTexId;
+    in vec3 fCoord;
 
 
 
     uniform sampler2D uTextures[8];
+    uniform float uTime;
+    uniform vec2 uResolution;
 
     out vec4 color;
 
 void main() {
+
+    vec2 uv = fCoord.xy/uResolution.xy;
+    vec3 grad = 0.5 + 0.5*cos(uTime + uv.xyx + vec3(0f,2f,4f));
+
+
+
     if (fTexId > 0){
         int id = int(fTexId);
-        color = fColor * texture(uTextures[id], fTexCoords) ;
+        color = fColor * texture(uTextures[id], fTexCoords) *vec4(grad, 1);
 
     }else{
         color = fColor;
     }
+
 }

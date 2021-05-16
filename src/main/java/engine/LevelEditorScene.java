@@ -23,15 +23,15 @@ public class LevelEditorScene extends Scene {
 
         this.camera = new Camera(new Vector2f(0, 0));
 
-        Spritesheet sprites = AssetPool.getSpritesheet("assets/image/spritesheet.png");
 
-        GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(100, 100), new Vector2f(256, 256)));
+        //Spritesheet sprites = AssetPool.getSpritesheet("assets/image/spritesheet.png");
+
+        GameObject obj1 = new GameObject("Object 1", new Transform(new Vector2f(0, 0), new Vector2f(900, 600)));
         obj1.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/image/niko.png"))));
         this.addGameObjectToScene(obj1);
 
-        GameObject obj2 = new GameObject("Object 2", new Transform(new Vector2f(400, 100), new Vector2f(256, 256)));
-        obj2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/image/test.jpg"))));
-        this.addGameObjectToScene(obj2);
+
+
     }
 
     private void loadResources() {
@@ -42,6 +42,7 @@ public class LevelEditorScene extends Scene {
                         130, 130, 4, 1));
     }
 
+    int zoom = 0;
     @Override
     public void update(float dt) {
         Window.setNameWindow((int)(1/dt));
@@ -49,6 +50,12 @@ public class LevelEditorScene extends Scene {
         for (GameObject go : this.gameObjects) {
             go.update(dt);
         }
+
+
+        camera.setZoom(zoom++);
+        camera.adjustProjection();
+
+
 
         this.renderer.render();
     }
