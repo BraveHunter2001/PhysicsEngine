@@ -23,7 +23,7 @@ public class LevelEditorScene extends  Scene{
 
 
         GameObject obj1 = new GameObject("obj1", new Transform(new Vector2f(0, 0), new Vector2f(200, 200)));
-        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/image/test.jpg")));
+        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/image/niko.png")));
         this.addGameObjectToScene(obj1);
 
 

@@ -41,7 +41,7 @@ void main() {
     int id = int(fTexId);
     if (fTexId > 0){
         color = fragColor * texture(uTexures[id], fTexCoords) ;
-        //color = vec4( fTexCoords, 0, 1) ;
+
     }else{
         color = fragColor;
     }
