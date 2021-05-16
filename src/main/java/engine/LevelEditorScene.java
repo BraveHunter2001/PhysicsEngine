@@ -3,10 +3,7 @@ package engine;
 
 import components.SpriteRenderer;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-import renderer.Shader;
-import until.AssetPool;
-import until.Time;
+import util.AssetPool;
 
 public class LevelEditorScene extends  Scene{
 
@@ -23,35 +20,11 @@ public class LevelEditorScene extends  Scene{
         this.camera = new Camera( new Vector2f(0, 0));
 
 
-/*
-        Vector2f posVect = new Vector2f(10,10);
-        Vector2f sizeVect = new Vector2f(500, 500);
-        Transform transform = new Transform(posVect, sizeVect);
 
-        GameObject go = new GameObject("Plane",transform);
-        go.addComponent(new SpriteRenderer(new Vector4f(1,1,1,1)));
-        this.addGameObjectToScene(go);
 
-    */
-        int xOffset = 10;
-        int yOffset = 10;
-
-        float totalWidth = (float)(600 - xOffset*2);
-        float totalHeight = (float)(600 - yOffset*2);
-
-        float sizeX = totalWidth / 100.0f;
-        float sizeY = totalHeight / 100.0f;
-
-        for (int x = 0; x < 100; x++) {
-            for (int y= 0; y < 100; y++) {
-                float xPos = xOffset + (x * sizeX);
-                float yPos = yOffset + (y * sizeY);
-
-                GameObject go = new GameObject("Obj"+x+""+y, new Transform(new Vector2f(xPos, yPos),new Vector2f(sizeX, sizeY)));
-                go.addComponent(new SpriteRenderer(new Vector4f(xPos/totalWidth, yPos/totalHeight, 1, 1)));
-                this.addGameObjectToScene(go);
-            }
-        }
+        GameObject obj1 = new GameObject("obj1", new Transform(new Vector2f(0, 0), new Vector2f(200, 200)));
+        obj1.addComponent(new SpriteRenderer(AssetPool.getTexture("assets/image/test.jpg")));
+        this.addGameObjectToScene(obj1);
 
 
         loadResources();

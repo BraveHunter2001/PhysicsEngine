@@ -1,4 +1,5 @@
-package until;
+
+package util;
 
 import renderer.Shader;
 import renderer.Texture;
@@ -8,16 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AssetPool {
-
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
 
-    public static Shader getShader(String resourceName){
+    public static Shader getShader(String resourceName) {
         File file = new File(resourceName);
-        if (AssetPool.shaders.containsKey(file.getAbsolutePath()))
-        {
+        if (AssetPool.shaders.containsKey(file.getAbsolutePath())) {
             return AssetPool.shaders.get(file.getAbsolutePath());
-        }else{
+        } else {
             Shader shader = new Shader(resourceName);
             shader.compile();
             AssetPool.shaders.put(file.getAbsolutePath(), shader);
@@ -25,14 +24,12 @@ public class AssetPool {
         }
     }
 
-    public static Texture getTexture(String resourceName){
+    public static Texture getTexture(String resourceName) {
         File file = new File(resourceName);
-        if (AssetPool.textures.containsKey(file.getAbsolutePath()))
-        {
+        if (AssetPool.textures.containsKey(file.getAbsolutePath())) {
             return AssetPool.textures.get(file.getAbsolutePath());
-        }else{
+        } else {
             Texture texture = new Texture(resourceName);
-
             AssetPool.textures.put(file.getAbsolutePath(), texture);
             return texture;
         }

@@ -3,31 +3,46 @@
 
 layout (location = 0) in vec3 aPos;
 layout (location = 1) in vec4 aColor;
-
+layout (location = 2) in vec2 aTexCoords;
+layout (location = 3) in float aTexId;
 
 uniform mat4 uProjection;
 uniform mat4 uView;
 
 out vec4 fragColor;
 out vec3 fragCoord;
+out vec2 fTexCoords;
+out float fTexId;
 
 
 void main() {
     fragColor = aColor;
     fragCoord = aPos;
+    fTexCoords = aTexCoords;
+    fTexId = aTexId;
+
     gl_Position = uProjection * uView * vec4(aPos, 1.0);
 }
 
 #type fragment
 #version 330 core
-    uniform float uTime;
-    uniform vec2 resolution;
     in vec4 fragColor;
-    in vec3 fragCoord;
+
+    in vec2 fTexCoords;
+    in float fTexId;
+
+
+
+    uniform sampler2D uTexures[8];
+
     out vec4 color;
 
 void main() {
-    vec2 uv = fragCoord.xy/ resolution.xy;
-    vec3 col = 0.5 + 0.5*cos(uTime + uv.xyx + vec3(0,2,4));
-    color = vec4(col, 1.0);
+    int id = int(fTexId);
+    if (fTexId > 0){
+        color = fragColor * texture(uTexures[id], fTexCoords) ;
+        //color = vec4( fTexCoords, 0, 1) ;
+    }else{
+        color = fragColor;
+    }
 }
