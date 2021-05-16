@@ -8,7 +8,7 @@ public class Sprite {
     private Texture texture;
     private Vector2f[] texCoords;
 
-    public Sprite(Texture texture){
+    public Sprite(Texture texture) {
         this.texture = texture;
         Vector2f[] texCoords = {
                 new Vector2f(1, 1),
@@ -19,16 +19,16 @@ public class Sprite {
         this.texCoords = texCoords;
     }
 
-    public Sprite(Texture texture, Vector2f[] texCoords){
+    public Sprite(Texture texture, Vector2f[] texCoords) {
         this.texture = texture;
         this.texCoords = texCoords;
     }
 
-    public Texture getTexture(){
+    public Texture getTexture() {
         return this.texture;
     }
 
-    public Vector2f[] getTexCoords(){
+    public Vector2f[] getTexCoords() {
         return this.texCoords;
     }
 }

@@ -15,12 +15,13 @@ public abstract class Scene {
     public Scene() {
 
     }
-    public void init()
-    {
+
+    public void init() {
 
     }
-    public void start(){
-        for (GameObject go: gameObjects){
+
+    public void start() {
+        for (GameObject go : gameObjects) {
             go.start();
             this.renderer.add(go);
         }
@@ -28,19 +29,18 @@ public abstract class Scene {
     }
 
     public void addGameObjectToScene(GameObject go) {
-        if(!isRunning){
+        if (!isRunning) {
             gameObjects.add(go);
-        }else {
+        } else {
             gameObjects.add(go);
             go.start();
             this.renderer.add(go);
         }
     }
 
-
     public abstract void update(float dt);
 
-    public Camera camera(){
+    public Camera camera() {
         return this.camera;
     }
 }

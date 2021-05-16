@@ -8,7 +8,7 @@ import renderer.Texture;
 public class SpriteRenderer extends Component {
 
     private Vector4f color;
-    Sprite sprite;
+    private Sprite sprite;
 
     public SpriteRenderer(Vector4f color) {
         this.color = color;
@@ -39,9 +39,5 @@ public class SpriteRenderer extends Component {
 
     public Vector2f[] getTexCoords() {
         return sprite.getTexCoords();
-    }
-
-    public void setColor(Vector4f color) {
-        this.color.set(color);
     }
 }
