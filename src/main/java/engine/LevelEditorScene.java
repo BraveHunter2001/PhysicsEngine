@@ -9,6 +9,8 @@ import org.joml.Vector4f;
 import renderer.Texture;
 import util.AssetPool;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class LevelEditorScene extends Scene {
@@ -31,7 +33,26 @@ public class LevelEditorScene extends Scene {
         this.addGameObjectToScene(obj1);
 
 
+    }
 
+
+    int zoom = 0;
+    @Override
+    public void update(float dt) {
+        Window.setNameWindow((int)(1/dt));
+
+
+        for (GameObject go : this.gameObjects) {
+            go.update(dt);
+        }
+
+        camera.setZoom(zoom++);
+        camera.adjustProjection();
+
+
+
+
+        this.renderer.render();
     }
 
     private void loadResources() {
@@ -40,23 +61,5 @@ public class LevelEditorScene extends Scene {
         AssetPool.addSpritesheet("assets/image/spritesheet.png",
                 new Spritesheet(AssetPool.getTexture("assets/image/spritesheet.png"),
                         130, 130, 4, 1));
-    }
-
-    int zoom = 0;
-    @Override
-    public void update(float dt) {
-        Window.setNameWindow((int)(1/dt));
-
-        for (GameObject go : this.gameObjects) {
-            go.update(dt);
-        }
-
-
-        camera.setZoom(zoom++);
-        camera.adjustProjection();
-
-
-
-        this.renderer.render();
     }
 }

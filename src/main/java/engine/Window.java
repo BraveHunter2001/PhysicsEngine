@@ -3,6 +3,9 @@ package engine;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import renderer.Framebuffer;
+import renderer.Shader;
+import util.AssetPool;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -13,6 +16,7 @@ public class Window {
     private int width, height;
     private String title;
     private long glfwWindow;
+    private Shader shader;
 
     public float r, g, b, a;
 
@@ -20,6 +24,7 @@ public class Window {
     private static Window window = null;
 
     private static Scene currentScene;
+    private Framebuffer framebuffer;
 
     private Window() {
         this.width = 900;
@@ -27,7 +32,7 @@ public class Window {
         this.title = "PhysicsEngine";
         r = 0;
         b = 0;
-        g = 0;
+        g = 1;
         a = 1;
     }
 
@@ -128,8 +133,10 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
-
+        this.framebuffer = new Framebuffer(600, 900);
+        shader = AssetPool.getShader("assets/shaders/default.glsl");
         Window.changeScene(0);
+
     }
 
     public void loop() {
@@ -143,10 +150,16 @@ public class Window {
 
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
-
+            this.framebuffer.bind();
             if (dt >= 0) {
                 currentScene.update(dt);
             }
+
+            shader.use();
+            shader.uploadInt("simpleTex", framebuffer.getTextureId());
+            this.framebuffer.unbind();
+
+
 
             glfwSwapBuffers(glfwWindow);
 

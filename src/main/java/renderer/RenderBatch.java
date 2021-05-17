@@ -4,7 +4,9 @@ import components.SpriteRenderer;
 import engine.Window;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.lwjgl.system.MemoryUtil;
 import util.AssetPool;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +16,7 @@ import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
 import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
+import static org.lwjgl.opengl.GL30.*;
 
 public class RenderBatch {
     // Vertex
@@ -42,11 +43,15 @@ public class RenderBatch {
 
     private List<Texture> textures;
     private int vaoID, vboID;
+    int framebuffer;
+    int textureColorbuffer;
+
     private int maxBatchSize;
     private Shader shader;
 
     public RenderBatch(int maxBatchSize) {
         shader = AssetPool.getShader("assets/shaders/default.glsl");
+
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
@@ -86,6 +91,7 @@ public class RenderBatch {
 
         glVertexAttribPointer(3, TEX_ID_SIZE, GL_FLOAT, false, VERTEX_SIZE_BYTES, TEX_ID_OFFSET);
         glEnableVertexAttribArray(3);
+
     }
 
     public void addSprite(SpriteRenderer spr) {
@@ -109,9 +115,11 @@ public class RenderBatch {
     }
 
     public void render() {
+
         // For now, we will rebuffer all data every frame
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
         glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+
 
         // Use shader
         shader.use();
@@ -119,6 +127,7 @@ public class RenderBatch {
         shader.uploadMat4f("uView", Window.getScene().camera().getViewMatrix());
         shader.uploadFloat("uTime", (float)glfwGetTime());
         shader.uploadVec2f("uResolution", new Vector2f(Window.getWidth(), Window.getHeight()));
+
 
 
         for (int i=0; i < textures.size(); i++) {
@@ -137,11 +146,15 @@ public class RenderBatch {
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
+
         for (int i=0; i < textures.size(); i++) {
             textures.get(i).unbind();
         }
         shader.detach();
+
     }
+
+
 
     private void loadVertexProperties(int index) {
         SpriteRenderer sprite = this.sprites[index];
@@ -155,7 +168,7 @@ public class RenderBatch {
         int texId = 0;
         if (sprite.getTexture() != null) {
             for (int i = 0; i < textures.size(); i++) {
-                if (textures.get(i) == sprite.getTexture()) {
+                if (textures.get(i).equals(sprite.getTexture())) {
                     texId = i + 1;
                     break;
                 }

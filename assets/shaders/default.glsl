@@ -1,4 +1,3 @@
-
 #type vertex
 #version 330 core
 
@@ -32,13 +31,12 @@ void main() {
     in float fTexId;
     in vec3 fCoord;
 
-
-
     uniform sampler2D uTextures[8];
     uniform float uTime;
     uniform vec2 uResolution;
 
     out vec4 color;
+
 
 void main() {
 
@@ -46,13 +44,12 @@ void main() {
     vec3 grad = 0.5 + 0.5*cos(uTime + uv.xyx + vec3(0f,2f,4f));
 
 
+    if (fTexId> 0){
+        vec4 colorTex  = texture(uTextures[int(fTexId)], fTexCoords);
 
-    if (fTexId > 0){
-        int id = int(fTexId);
-        color = fColor * texture(uTextures[id], fTexCoords) *vec4(grad, 1);
-
+        color = colorTex * fColor;
     }else{
-        color = fColor;
+        color = vec4(1, 0.678, 0.870, 1);
     }
 
 }
