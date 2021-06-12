@@ -150,14 +150,14 @@ public class Window {
 
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
-            this.framebuffer.bind();
+            //this.framebuffer.bind();
             if (dt >= 0) {
                 currentScene.update(dt);
             }
 
-            shader.use();
-            shader.uploadInt("simpleTex", framebuffer.getTextureId());
-            this.framebuffer.unbind();
+           // shader.use();
+            //shader.uploadInt("simpleTex", framebuffer.getTextureId());
+           // this.framebuffer.unbind();
 
 
 

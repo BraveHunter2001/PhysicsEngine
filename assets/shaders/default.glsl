@@ -47,7 +47,7 @@ void main() {
     if (fTexId> 0){
         vec4 colorTex  = texture(uTextures[int(fTexId)], fTexCoords);
 
-        color = colorTex * fColor;
+        color = colorTex * fColor * vec4(grad, 1.0);
     }else{
         color = vec4(1, 0.678, 0.870, 1);
     }
